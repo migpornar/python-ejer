@@ -26,7 +26,7 @@ import math
 
 def suma_cuadrados(xs):
     return sum(x**2 for x in xs if x%2 == 0)
-######!!!!NOTA, NO PONGO CORCHETES PARA QUE NO ME GENERE LA LISTA!!
+######NOT: NO PONGO CORCHETES PARA QUE NO ME GENERE LA LISTA
 
 
 
@@ -368,9 +368,6 @@ def digitos_grandes(n):
         print(stracum)
 
 
-
-
-
 # -----------
 # EJERCICIO 6
 # -----------
@@ -451,7 +448,6 @@ def dic_posiciones_coincidentes(xs,ys):
     return {i:xs[i] for i in range(len(xs)) if xs[i] == ys[i]}
 
 
-
 # -----------
 # EJERCICIO 8
 # -----------
@@ -484,13 +480,6 @@ def dic_posiciones_coincidentes(xs,ys):
 def histograma_horizontal(dic):
     for (l,n) in sorted(dic.items()):
         print(l + ": "+ n*"*") 
-
-
-
-
-
-
-
 
 
 # ------------
@@ -599,11 +588,6 @@ def histograma_vertical(dic,c="*",header=False):
     return
 
 
-
-
-
-
-
 # ------------
 # EJERCICIO 10
 # ------------
@@ -635,8 +619,7 @@ def alumnos_grupo(d):
         else:
             dg[g] = [n]
     return(dg)
-            
-         
+                  
 
 # 2) Definir una función nuevo_alumno(dict_n,dict_g,nombre,grupo) tal que
 # supuesto que dict_n y dict_g son dos variables conteniendo respectivamente
@@ -697,12 +680,6 @@ def nuevo_alumno(dicn,dicg,nombre,grupo):
     return
             
 
-
-
-
-
-
-
 # ------------
 # EJERCICIO 11
 # ------------
@@ -722,12 +699,6 @@ def nuevo_alumno(dicn,dicg,nombre,grupo):
 
 def sustituye(x,y,ls):
     return([y if x == l else l for l in ls])
-
-
-
-
-
-
 
 
 # ------------
@@ -755,14 +726,16 @@ def sustituye(x,y,ls):
 # -------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
+def punto_de_silla(xss):
+    n = len(xss)
+    m = len(xss[0])
+    for i in range(n):
+        for j in range(m):
+            valor = xss[i][j]
+            if max(xss[i]) == valor and min([colum[j] for colum in xss]) == valor:
+                return i,j
+    return False
+        
 
 # ------------
 # EJERCICIO 13
@@ -795,13 +768,6 @@ def mezcla(xs,ys):
     return(lista)
 
 
-
-
-
-
-
-
-
 # ------------
 # EJERCICIO 14
 # ------------
@@ -818,25 +784,47 @@ def mezcla(xs,ys):
 #    igual
 #  Ejemplo:
  
-#  >>> compresión([1, 1, 1, 2, 1, 3, 2, 4, 4, 6, 8, 8, 8])
-#  [[3, 2], 1, 3, 2, 4, [2, 6], 8, [3, 8]]
-#  >>> compresión(["a", "a", "a", "b", "a", "c", "b", "d", "d", "f", "h", "h", "h"])
-#  [[3, 'b'], 'a', 'c', 'b', 'd', [2, 'f'], 'h', [3, 'h']]
+#  >>> compresion([1, 1, 1, 2, 1, 3, 2, 4, 4, 6, 8, 8, 8])
+#  [[3, 1], 2, 1, 3, 2, [2, 4], 6, [3, 8]]
+#  >>> compresion(["a", "a", "a", "b", "a", "c", "b", "d", "d", "f", "h", "h", "h"])
+#  [[3, 'a'], 'b', 'a', 'c', 'b', [2, 'd'], 'f', [3, 'h']]
 
 #  Apartado (b).
 #  Definir la función descompresion(l) que devuelva la lista l descomprimida,
 #  suponiendo que ha sido comprimida con el método del apartado anterior.
 #  Ejemplo:
 
-#  >>> descompresión([[3, 1], 2, 1, 3, 2, [2, 4], 6, [3, 8]])
+#  >>> descompresion([[3, 1], 2, 1, 3, 2, [2, 4], 6, [3, 8]])
 #  [1, 1, 1, 2, 1, 3, 2, 4, 4, 6, 8, 8, 8]
 # ----------------------------------------------------------------------------
 
 
+def compresion(xs):
+    elem = xs[0]
+    acum = 0
+    lista = []
+    for x in xs:
+        if x == elem:
+            acum += 1
+        elif acum == 1:
+            lista += [elem]
+            elem = x
+            acum = 1
+        else:
+            lista += [[acum,elem]]
+            elem = x
+            acum = 1
+    lista += [[acum,elem]]
+    return lista
 
-
-
-
+#    
+#def descompresion(xs):
+#    lista = []
+#    for x in xs:
+#        if x == [_,_]:
+#            for _ in range(rep):
+#                lista += [elem]
+#        
 
 
 
