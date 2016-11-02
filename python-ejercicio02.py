@@ -3,12 +3,8 @@
 
 # Práctica 2: Introducción a Python
 # =================================
-#######
-# 5, 7, 8, 9, 2ªparte del 10, 13
-#######
 
 import math
-
 
 # -----------
 # EJERCICIO 1
@@ -26,7 +22,7 @@ import math
 
 def suma_cuadrados(xs):
     return sum(x**2 for x in xs if x%2 == 0)
-######NOT: NO PONGO CORCHETES PARA QUE NO ME GENERE LA LISTA
+##### NO PONGO CORCHETES PARA QUE NO ME GENERE LA LISTA
 
 
 
@@ -367,6 +363,16 @@ def digitos_grandes(n):
             stracum += lista[j][i] + " "
         print(stracum)
 
+digitos = [cero,uno,dos,tres,cuatro,cinco,seis,siete,ocho,nueve]
+
+def digitos_grandes2(n):
+    sn = str(n)
+    for fila in range(7):
+        linea = ""
+        for digito in sn:
+            linea += " " + digitos[int(digito)][fila]
+        print(linea)
+    
 
 # -----------
 # EJERCICIO 6
@@ -447,6 +453,9 @@ def aspa(a,c="o"):
 def dic_posiciones_coincidentes(xs,ys):
     return {i:xs[i] for i in range(len(xs)) if xs[i] == ys[i]}
 
+### TAMBIEN SE PUEDE USAR ENUMERATE
+def dic_posiciones_coincidentes2(xs,ys):
+    return {i:x for i,(x,y) in enumerate(zip(xs,ys)) if x == y}
 
 # -----------
 # EJERCICIO 8
@@ -481,6 +490,11 @@ def histograma_horizontal(dic):
     for (l,n) in sorted(dic.items()):
         print(l + ": "+ n*"*") 
 
+### USANDO LA FUNCION FORMAT
+
+def histograma_horizontal2(dic):
+    for k,v in sorted(dic.items()):
+        print("{}: {}".format(k,"*"*v))
 
 # ------------
 # EJERCICIO 9
@@ -587,7 +601,19 @@ def histograma_vertical(dic,c="*",header=False):
     print(acumlin)
     return
 
+### CON LA FUNCION JOIN: VA INTERCALANDO ENTRE ks, ESPACIOS " "
 
+def histograma_vertical2(d):
+    ks = sorted(d.keys())
+    maxv = max(d.values())
+    for altura in range(maxv,0,-1):
+        lin=""
+        for k in ks:
+            lin += ("* " if d[k] >= altura else "  ")
+        print(lin)
+    print(" ".join(ks))
+    
+    
 # ------------
 # EJERCICIO 10
 # ------------
@@ -618,7 +644,7 @@ def alumnos_grupo(d):
             dg[g] += [n]
         else:
             dg[g] = [n]
-    return(dg)
+    return dg
                   
 
 # 2) Definir una función nuevo_alumno(dict_n,dict_g,nombre,grupo) tal que
@@ -765,7 +791,26 @@ def mezcla(xs,ys):
         lista += ys
     else:
         lista += xs
-    return(lista)
+    return lista
+
+    
+def mezcla2(xs,ys):
+    lista = []
+    if (xs != [] and ys != []):
+        a = xs[0]
+        b = ys[0]
+        if a < b:
+            lista = [a]
+            xs = xs[1:]
+        else:
+            lista =[b]
+            ys = ys[1:]
+    elif xs == []:
+        return(lista + ys)
+    else:
+        return(lista + xs)
+    return(lista + mezcla(xs,ys))
+
 
 
 # ------------
@@ -817,14 +862,18 @@ def compresion(xs):
     lista += [[acum,elem]]
     return lista
 
-#    
-#def descompresion(xs):
-#    lista = []
-#    for x in xs:
-#        if x == [_,_]:
-#            for _ in range(rep):
-#                lista += [elem]
-#        
+    
+def descompresion(xs):
+    lista = []
+    for x in xs:
+        if list == type(x):
+            for _ in range(x[0]):
+                lista += [x[1]]
+        else:
+            lista += [x]
+    return lista
+### USO DE LA FUNCION TYPE
+
 
 
 
