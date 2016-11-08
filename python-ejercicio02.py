@@ -793,7 +793,7 @@ def mezcla(xs,ys):
         lista += xs
     return lista
 
-    
+### POR RECURSION
 def mezcla2(xs,ys):
     lista = []
     if (xs != [] and ys != []):
