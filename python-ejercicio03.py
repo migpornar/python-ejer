@@ -7,6 +7,8 @@
 
 import math
 import random
+# Como solo vamos a usar randrange podemos poner
+# from random import randrange
 
 # -----------
 # EJERCICIO 1
@@ -42,7 +44,7 @@ def codifica_descodifica(texto,textocod):
     for linea in open(texto):
         f.write(codifica_string(linea))
     f.close()
-    return
+    
     
 def codifica_string(linea):
     if (linea != ""):
@@ -98,7 +100,6 @@ def mi_grep(cadena,texto):
         imprime = 0
         cadenalinea= ""
         nlinea += 1
-    return
             
 # -----------
 # EJERCICIO 3
@@ -171,24 +172,25 @@ def dicotomia(f,a,b,eps):
 class MDado(object):
     
     def __init__(self,nCaras):
-        self.nCaras = nCaras
+        self.__nCaras = nCaras #SIGNIFICA QUE NO SE LE DEBE CAMBIAR EL VALOR
         self.valor = 1
         
     def tira(self):
         random.seed()
-        self.valor = random.randrange(1, self.nCaras)
-        return
+        self.valor = random.randrange(1, self.__nCaras + 1)
+
 
     def obten_valor(self):
         return(self.valor)
     
     def fija_valor(self,n):
         self.valor = n
+
 # -----------
 # EJERCICIO 5
 # -----------
 # (J. Zelle) Supongamos que queremos simular la trayectoria de un proyectil
-# que se dispara en un punto dado a una determinada altura inicial. El disparo
+# que se dispara en un punto dadocomo a una determinada altura inicial. El disparo
 # se realiza hacia adelante con una velocidad inicial y con un determinado
 # ángulo. Inicialmente el proyectial avanzará subiendo pero por la fuerza de
 # la gravedad en un momento dado empezará a bajar hasta que aterrice. Por
@@ -229,7 +231,7 @@ class MDado(object):
 #   intervalo, entonces al final del intervalo tiene una velocidad 
 #   vy1=vy0-9.8*t, debido a la gravedad de la tierra.
 # - En ese caso, si el proyectil se encuentra a una altura h0, tras un
-#   intervalo t de tiempo se encontrará a una altura h1=h0 - vm*t, donde vm es la
+#   intervalo t de tiempo se encontrará a una altura h1=h0 + vm*t, donde vm es la
 #   media entre las anteriores vy0 y vy1. 
 
 # Ejemplo:
@@ -267,27 +269,27 @@ class Proyectil(object):
         self.pos_y = altura
         self.vel_x = velocidad*math.cos(angulo)
         self.vel_y = velocidad*math.sin(angulo)
-                    
+
     def __repr__(self):
         return '(' + str(self.pos_x) + ',' + str(self.pos_y) + ')'
-    
+
     def __str__(self):
         cadena = '(' + str(self.pos_x) + ',' + str(self.pos_y) + ')'
         return cadena
-        
+
     def actualiza(self,t):
         self.pos_x += self.vel_x*t 
         vel2 = self.vel_y - 9.8*t
         self.pos_y = self.pos_y + t*(self.vel_y + vel2)/2
         self.vel_y = vel2
-        return
+
 
     def obten_posx(self):
         return(self.pos_x)
-        
+
     def obten_posy(self):
         return(self.pos_y)    
-    
+
 def aterriza(altura, velocidad, angulo, intervalo):
     Pry = Proyectil(velocidad,angulo,altura)
     intr = 0
@@ -301,7 +303,7 @@ def aterriza(altura, velocidad, angulo, intervalo):
           intr*intervalo, "segundos ) el proyectil ha aterrizado.")
     print("Ha recorrido una distancia de", str(Pry.obten_posx()), "metros")
     print("Con una altura maxima de", maxy, "metros")
-    return
+
 
 # -----------
 # EJERCICIO 6
@@ -409,39 +411,37 @@ class Alumno(object):
     
     def __init__(self, nombre,asignaturas):
         self.nombre = nombre
-        self.dicnotas = {asig:'-' for asig in asignaturas}
+        self.__dicnotas = {asig:'-' for asig in asignaturas}
                     
     def __repr__(self):
         return self.nombre
         
     def pon_nota(self,asig,nota):
-        if asig in self.dicnotas:
-            self.dicnotas[asig]=nota
+        if asig in self.__dicnotas:
+            self.__dicnotas[asig]=nota
         else:
             raise AsignaturaNoMatriculada("Asignatura no matriculada para este alumno")
-        return
 
     def consulta_nota(self,asig):
-        if asig in self.dicnotas:
-            return (self.dicnotas[asig])
+        if asig in self.__dicnotas:
+            return (self.__dicnotas[asig])
         else:
             raise AsignaturaNoMatriculada("Asignatura no matriculada para este alumno")
     
     def anade_asignatura(self,asig):
-        self.dicnotas[asig] = '-'
-        return
-
+        self.__dicnotas[asig] = '-'
+        
     def asignaturas_matriculadas(self):
-        return list(self.dicnotas.keys())     
+        return list(self.__dicnotas.keys())     
 
     def media_expediente(self,plan_estudios):
         acum_cred = 0
         acum_media = 0
-        lista_asig_matr = list(self.dicnotas.keys())
+        lista_asig_matr = list(self.__dicnotas.keys())
         for (asig, cred) in plan_estudios.items():
             acum_cred += cred
             if asig in lista_asig_matr:
-                a = self.dicnotas[asig]
+                a = self.__dicnotas[asig]
                 if (a != '-'):
                     acum_media += cred*a
                 else: ()
@@ -558,7 +558,7 @@ def crea_alumno(linea):
 # ------------------------------------------------------------
 
 def mejor_expediente(lista,plan):
-    mejor = lista[0]
+    mejor = float("-inf")
     media = mejor.media_expediente(plan)
     for alumno in lista[1:]:
         media2 = max(media, alumno.media_expediente(plan))
